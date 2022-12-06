@@ -311,16 +311,15 @@ function getDigitalRoot(num) {
  *   '{)' = false
  *   '{[(<{[]}>)]}' = true
  */
-function isBracketsBalanced(/* str */) {
-  // let x = str;
-  // while (x.includes('()') || x.includes('{}') || x.includes('[]') || x.includes('<>')) {
-  //   x = x.replace('()', '');
-  //   x = x.replace('[]', '');
-  //   x = x.replace('{}', '');
-  //   x = x.replace('<>', '');
-  // }
-  // return x.length < 1;
-  throw new Error('Not implemented');
+function isBracketsBalanced(str) {
+  let x = str;
+  while (x.includes('()') || x.includes('{}') || x.includes('[]') || x.includes('<>')) {
+    x = x.replace('()', '');
+    x = x.replace('[]', '');
+    x = x.replace('{}', '');
+    x = x.replace('<>', '');
+  }
+  return x.length < 1;
 }
 
 /**
@@ -392,8 +391,21 @@ function getCommonDirectoryPath(pathes) {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
+function getMatrixProduct(m1, m2) {
+  const res = [];
+  res.length = m1.length;
+  res.fill([]);
+  for (let i = 0; i < m1.length; i += 1) {
+    res[i] = [];
+    for (let j = 0; j < m1.length; j += 1) {
+      let temp = 0;
+      for (let n = 0; n < m2.length; n += 1) {
+        temp += m1[i][n] * m2[n][j];
+      }
+      res[i][j] = temp;
+    }
+  }
+  return res;
 }
 
 /**
@@ -426,8 +438,41 @@ function getMatrixProduct(/* m1, m2 */) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
+function evaluateTicTacToePosition(position) {
+  let result;
+  position.forEach((row) => {
+    if (row.every((el) => el === 'X') && row.length === 3) {
+      result = 'X';
+    }
+    if (row.every((el) => el === '0' && row.length === 3)) {
+      result = '0';
+    }
+  });
+  const diagonals = [[], []];
+  for (let i = 0; i < 3; i += 1) {
+    const temp = [];
+    diagonals[0].push(position[i][i]);
+    diagonals[1].push(position[2 - i][i]);
+
+    for (let j = 0; j < 3; j += 1) {
+      temp.push(position[j][i]);
+    }
+    if (temp.every((el) => el === 'X' && temp.length === 3)) {
+      return 'X';
+    }
+    if (temp.every((el) => el === '0' && temp.length === 3)) {
+      return '0';
+    }
+  }
+  diagonals.forEach((dia) => {
+    if (dia.every((el) => el === 'X' && dia.length === 3)) {
+      result = 'X';
+    }
+    if (dia.every((el) => el === '0' && dia.length === 3)) {
+      result = '0';
+    }
+  });
+  return result;
 }
 
 module.exports = {
